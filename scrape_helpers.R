@@ -5,9 +5,9 @@ scrape_weekly <- function(season = NULL, week = NULL, data_path = 'data') {
   if(is.null(season)) 
     season <- as.numeric(format(Sys.Date(), "%Y"))
   
-  # Default to the current week
+  # Default to week 1
   if(is.null(week)) 
-    week = as.integer(as.double(Sys.Date() - as.Date("2019-09-05")) / 7) + 1
+    week = 1
   
   file_name = file.path(data_path, paste(Sys.Date(), '_week-', week, '.Rda', sep=""))
   

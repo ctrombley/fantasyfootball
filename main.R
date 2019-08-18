@@ -2,12 +2,16 @@ source('yahoo_helpers.R')
 
 league_id <-'390.l.371449'
 my_team_id <- '390.l.371449.t.3'
+season_start <- '2019-09-05'
 
-print("Scraping data...")
+# Default to the current week, or week 1 if we're still in preseason
+week = max(1, as.integer(as.double(Sys.Date() - as.Date(season_start)) / 7) + 1)
+
+print("Scraping season data...")
 season_data = scrape_season()
 
-print("Scraping week 1 data...")
-weekly_data = scrape_weekly(week=1)
+print(paste("Scraping week ", week, " data...", sep=""))
+weekly_data = scrape_weekly(week = week)
 
 print("Generating projections...")
 custom_scoring <- get_custom_scoring()
