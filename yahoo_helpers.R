@@ -56,7 +56,7 @@ get_players_for_team <- function(team_id) {
   
   # Merge in the canonical player ids
   player_ids = get_player_ids("Yahoo")
-  players <- merge(player_ids, players, by="src_id")
+  players <- merge(player_ids, players, by="src_id", all.y=TRUE)
   
   # Select and reorder results
   players <- players %>% select(id, name, position, team_id, src_id)
@@ -93,10 +93,6 @@ get_teams <- function(league_id) {
 }
   
 get_players_for_all_teams <- function(league_id) {
-  # Make an API request to Yahoo's league endpoint
-  url <- sprintf("https://fantasysports.yahooapis.com/fantasy/v2/league/%s/teams?response=json", league_id)
-  res <- GET(url, httr::config(token = get_auth_token()))
-  
   teams = get_teams(league_id)
   team_ids = teams[['team_id']]
   
@@ -110,6 +106,10 @@ get_players_for_all_teams <- function(league_id) {
   return(players)
 }
 
-get_waiver_players <- function(league_id) {
-  
+# Get the active league & team IDs here
+get_user <- function() {
+  # Make an API request to Yahoo's player endpoint
+  url <- sprintf("https://fantasysports.yahooapis.com/fantasy/v2/users;use_login=1/games;game_keys=nfl/teams?response=json")
+  res <- GET(url, httr::config(token = get_auth_token()))
+  return(content(res))
 }
