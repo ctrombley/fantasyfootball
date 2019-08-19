@@ -2,7 +2,7 @@
 Tools for playing fantasy football on Yahoo.  Based on the awesome [ffanalytics](https://github.com/FantasyFootballAnalytics/ffanalytics) R package.
 
 ## Getting started
-You'll need an app created on the Yahoo Developer Network with read access to Fantasy Sports data.  Place the client ID and client secret into a file called `config.yaml` in the root of this repo:
+You'll need an app created on the [Yahoo Developer Network](https://developer.yahoo.com/apps/) with read access to Fantasy Sports data.  Place the client ID and client secret into a file called `config.yaml` in the root of this repo:
 ```ruby
 yahoo_oauth_key: <CLIENT_ID>
 yahoo_oauth_secret: <CLIENT_SECRET>
