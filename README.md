@@ -1,5 +1,5 @@
 # fantasyfootball
-Tools for playing fantasy football on Yahoo.
+Tools for playing fantasy football on Yahoo.  Based on the awesome [ffanalytics](https://github.com/FantasyFootballAnalytics/ffanalytics) R package.
 
 ## Getting started
 You'll need an app created on the Yahoo Developer Network with read access to Fantasy Sports data.  Place the client ID and client secret into a file called `config.yaml` in the root of this repo:
