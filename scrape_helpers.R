@@ -56,7 +56,7 @@ scrape_season <- function(season = NULL, data_path = 'data', force=FALSE) {
                                     'FantasyFootballNerd',
                                     'NFL',
                                     'RTSports',
-                                    'Walterfootball',
+                                    #'Walterfootball',
                                     'Yahoo'),
                             pos = c("QB", "RB", "WR", "TE", "K", "DST"),
                             season = season, week = 0)
