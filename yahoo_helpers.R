@@ -47,7 +47,7 @@ get_players_for_team <- function(team_id) {
     name <- player$name.full
     position <- player$primary_position
     if (position=="DEF")
-      src_id <- player$editorial_team_abbr
+      src_id <- toupper(player$editorial_team_abbr)
     else
       src_id <- player$player_id
 

@@ -1,4 +1,5 @@
 source('yahoo_helpers.R')
+source('graph_helpers.R')
 
 league_id <-'390.l.371449'
 my_team_id <- '390.l.371449.t.3'
@@ -20,9 +21,9 @@ print("Generating weekly projections...")
 weekly_projections <-  projections_table(weekly_data, scoring_rules = custom_scoring)
 
 print("Decorating projections...")
-season_projections <- season_projections %>% add_ecr() %>% add_risk() %>%
-  add_adp() %>% add_aav() %>% add_player_info()
+season_projections <- season_projections %>% add_player_info()
 weekly_projections <- weekly_projections %>% add_player_info()
+# weekly_projections$rank = left_join(weekly_projections, season_projections, by = c("id", "avg_type", "pos"))$rank
 
 print("Fetching league info...")
 players <- get_players_for_all_teams(league_id)
@@ -42,3 +43,5 @@ weekly_available = weekly_projections %>% filter(avg_type == 'weighted') %>%
 print(paste("Generating optimal lineup for week ", week, "...", sep=""))
 optimal_lineup = weekly_projections %>% filter(avg_type == 'weighted') %>%  
   filter(id %in% my_team$id) %>% arrange(desc(points))
+team_graph(optimal_lineup, week)
+gold_mining_graph(weekly_available, "DST")
