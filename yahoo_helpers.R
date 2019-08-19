@@ -29,7 +29,7 @@ get_players_for_team <- function(team_id) {
   # Make an API request to Yahoo's teams endpoint
   url <- sprintf("https://fantasysports.yahooapis.com/fantasy/v2/team/%s/roster/players?response=json", team_id)
   res <- GET(url, httr::config(token = get_auth_token()))
-  
+
   # Deserialize the player data from the response
   player_data <- content(res)$fantasy_content$team[[2]]$roster$`0`$players 
   
@@ -45,8 +45,12 @@ get_players_for_team <- function(team_id) {
     player <- as.list(unlist(player_data[[i]]$player[[1]]))
     
     name <- player$name.full
-    src_id <- player$player_id
     position <- player$primary_position
+    if (position=="DEF")
+      src_id <- player$editorial_team_abbr
+    else
+      src_id <- player$player_id
+
     
     if (is.null(position))
       position = "UNKNOWN"

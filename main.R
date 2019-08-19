@@ -13,9 +13,10 @@ season_data = scrape_season()
 print(paste("Scraping week ", week, " data...", sep=""))
 weekly_data = scrape_weekly(week = week)
 
-print("Generating projections...")
 custom_scoring <- get_custom_scoring()
+print("Generating season projections...")
 season_projections <-  projections_table(season_data, scoring_rules = custom_scoring)
+print("Generating weekly projections...")
 weekly_projections <-  projections_table(weekly_data, scoring_rules = custom_scoring)
 
 print("Decorating projections...")
@@ -38,6 +39,6 @@ weekly_available = weekly_projections %>% filter(avg_type == 'weighted') %>%
   filter(available == TRUE) %>% arrange(desc(points))
 
 # Optimize lineup
-print("Generating optimized lineup...")
+print(paste("Generating optimal lineup for week ", week, "...", sep=""))
 optimal_lineup = weekly_projections %>% filter(avg_type == 'weighted') %>%  
   filter(id %in% my_team$id) %>% arrange(desc(points))
