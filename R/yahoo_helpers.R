@@ -2,7 +2,7 @@ library(httr)
 library(data.table)
 library(configr)
 
-source('get_player_ids.R')
+source('R/get_player_ids.R')
 
 get_auth_token <- function(oauth_key = NULL, oauth_secret = NULL, config_file = 'config.yaml')
 {
