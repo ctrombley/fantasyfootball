@@ -2,6 +2,7 @@ source('R/yahoo_helpers.R')
 source('R/graph_helpers.R')
 source('R/scrape_helpers.R')
 source('R/get_custom_scoring.R')
+source('R/aws_auth.R')
 
 league_id <-'390.l.371449'
 my_team_id <- '390.l.371449.t.3'

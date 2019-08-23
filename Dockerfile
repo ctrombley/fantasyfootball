@@ -2,6 +2,7 @@ FROM rocker/tidyverse
 
 RUN R -e " \
 install.packages(c('configr', 'ggthemes')); \
+install.packages(c('aws.s3', 'aws.iam', 'aws.signature'), repos = c(cloudyr = 'http://cloudyr.github.io/drat')); \
 devtools::install_github('FantasyFootballAnalytics/ffanalytics'); \
 "
 

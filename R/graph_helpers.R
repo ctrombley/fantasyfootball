@@ -2,8 +2,8 @@ library(ggplot2)
 library(ggthemes)
 
 team_graph <- function(dt,week) {
-  x_max <- max(filtered_dt$ceiling,na.rm=TRUE)+3
-  x_min <- min(filtered_dt$floor,na.rm=TRUE)-3
+  x_max <- max(dt$ceiling,na.rm=TRUE)+3
+  x_min <- min(dt$floor,na.rm=TRUE)-3
   ggplot(dt, aes(x=points, y=rank(-dt$points), color=as.factor(pos))) +
     geom_errorbarh(aes(xmin=floor,xmax=ceiling),height=.3) +
     geom_point(size=5,color="white") +

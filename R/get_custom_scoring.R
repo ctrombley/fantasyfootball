@@ -1,4 +1,6 @@
 get_custom_scoring <- function() {
+  config = read.config(file = 'config.yaml')
+
   hctm_scoring = list(
     pass = list(
       pass_att = 0, pass_comp = 0, pass_inc = 0, pass_yds = 0.04, pass_tds = 4,
@@ -47,6 +49,6 @@ get_custom_scoring <- function() {
     )
   )
   
-  saveRDS(hctm_scoring, "data/hctm_scoring.rds")
+  s3saveRDS(hctm_scoring, object="data/hctm_scoring.Rds", bucket=config$aws_bucket)
   return(hctm_scoring)
 }
