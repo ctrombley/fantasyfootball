@@ -1,0 +1,14 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: fantasyfootball
+spec:
+  schedule: "0 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: fantasyfootball
+            image: 712625750597.dkr.ecr.us-west-2.amazonaws.com/fantasyfootball:latest
+          restartPolicy: OnFailure

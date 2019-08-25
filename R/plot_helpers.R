@@ -1,7 +1,7 @@
 library(ggplot2)
 library(ggthemes)
 
-team_graph <- function(dt,week) {
+team_projections_plot <- function(dt,week) {
   x_max <- max(dt$ceiling,na.rm=TRUE)+3
   x_min <- min(dt$floor,na.rm=TRUE)-3
   ggplot(dt, aes(x=points, y=rank(-dt$points), color=as.factor(pos))) +
@@ -28,7 +28,7 @@ team_graph <- function(dt,week) {
 }
 
 
-gold_mining_graph <- function(dt, positions, rows=60) {
+gold_mining_plot <- function(dt, positions, rows = 30, color_column = 'tier') {
   filtered_dt <- dt %>% filter(position %in% positions)
   filtered_dt$relative_rank <- rank(-filtered_dt$points)
   filtered_dt <- filtered_dt %>% filter(filtered_dt$relative_rank < rows)
@@ -37,7 +37,7 @@ gold_mining_graph <- function(dt, positions, rows=60) {
   x_max <- max(filtered_dt$ceiling,na.rm=TRUE)+10
   x_min <- min(filtered_dt$floor,na.rm=TRUE)
 
-  ggplot(filtered_dt, aes(x=points, y=relative_rank, color=as.factor(tier))) +
+  ggplot(filtered_dt, aes(x=points, y=relative_rank, color=as.factor(!!as.name(color_column)))) +
     geom_errorbarh(aes(xmin=floor,xmax=ceiling),height=.3) +
     geom_point(size=5,color="white") +
     geom_text(aes(x=points,label=round(points,0)),size=3,show.legend = FALSE) +

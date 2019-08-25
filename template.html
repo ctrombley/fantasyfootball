@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+  <!-- template.html -->
+  <html>
+    <head>
+      <title>Fantasy Update</title>
+    </head>
+    <body>
+      <h3>Lineup</h3>
+      Your optimal starting lineup for week {{ week }} is:
+      {{
+        tags$ul(
+          map(transpose(optimal_lineup), function(row) {
+            player = as.list(row)
+            return(tags$li(sprintf("%s %s (%s), %f", player$first_name, player$last_name, player$pos, player$points)))
+          })
+        )
+      }}
+      
+      <h3>Team Projections</h3>
+      <div>
+        {{ tags$img(src=team_projections_url) }}
+      </div>
+      
+      <h3>Weekly Gold Mining</h3>
+      <div>
+        {{ map(weekly_gold_mining_urls, function(url) tags$img(src=url)) }}
+      </div>
+      
+      <h3>Sesason Gold Mining</h3>
+      <div>
+        {{ map(season_gold_mining_urls, function(url) tags$img(src=url)) }}
+      </div>
+    </body>
+  </html>

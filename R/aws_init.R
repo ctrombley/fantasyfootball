@@ -1,3 +1,4 @@
+library(aws.signature)
 library(configr)
 
 config = read.config(file = 'config.yaml')

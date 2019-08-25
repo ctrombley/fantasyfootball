@@ -1,15 +1,16 @@
-source('R/yahoo_helpers.R')
-source('R/graph_helpers.R')
-source('R/scrape_helpers.R')
-source('R/get_custom_scoring.R')
-source('R/aws_auth.R')
+library(configr)
 
-league_id <-'390.l.371449'
-my_team_id <- '390.l.371449.t.3'
-season_start <- '2019-09-05'
+source('R/yahoo_helpers.R')
+source('R/plot_helpers.R')
+source('R/scrape_helpers.R')
+source('R/report_helpers.R')
+source('R/get_custom_scoring.R')
+source('R/aws_init.R')
+
+config = read.config('config.yaml')
 
 # Default to the current week, or week 1 if we're still in preseason
-week = max(1, as.integer(as.double(Sys.Date() - as.Date(season_start)) / 7) + 1)
+week = max(1, as.integer(as.double(Sys.Date() - as.Date(config$season_start)) / 7) + 1)
 
 print("Scraping season data...")
 season_data = scrape_season()
@@ -29,22 +30,27 @@ weekly_projections <- weekly_projections %>% add_player_info()
 # weekly_projections$rank = left_join(weekly_projections, season_projections, by = c("id", "avg_type", "pos"))$rank
 
 print("Fetching league info...")
-players <- get_players_for_all_teams(league_id)
-my_team <- players %>% filter(team_id == my_team_id)
+players <- get_players_for_all_teams(config$league_id)
+my_team <- players %>% filter(team_id == config$my_team_id)
 
 # Mark each player as available or not
 season_projections$available <- !(season_projections$id %in% players$id)
 weekly_projections$available <- !(weekly_projections$id %in% players$id)
 
 # Get available players and order by season projected points
-season_available = season_projections %>% filter(avg_type == 'weighted') %>% 
+season_available = season_projections %>% filter(avg_type == config$avg_type) %>% 
   filter(available == TRUE) %>% arrange(desc(points))
-weekly_available = weekly_projections %>% filter(avg_type == 'weighted') %>% 
+weekly_available = weekly_projections %>% filter(avg_type == config$avg_type) %>% 
   filter(available == TRUE) %>% arrange(desc(points))
 
-# Optimize lineup
-print(paste("Generating optimal lineup for week ", week, "...", sep=""))
-optimal_lineup = weekly_projections %>% filter(avg_type == 'weighted') %>%  
+# Get team projections
+print(paste("Generating team_projections for week ", week, "...", sep=""))
+team_projections = weekly_projections %>% filter(avg_type == config$avg_type) %>%  
   filter(id %in% my_team$id) %>% arrange(desc(points))
-team_graph(optimal_lineup, week)
-gold_mining_graph(weekly_available, "DST")
+
+print(paste("Sending report for week ", week, "...", sep=""))
+html = create_report(team_projections,
+                     weekly_available,
+                     season_available,
+                     week = week)
+email_report(html = html, to = config$email_to)
