@@ -1,0 +1,16 @@
+kind: pipeline
+name: default
+
+steps:
+  - name: publish
+    image: plugins/ecr
+    settings:
+      access_key:
+        from_secret: AWS_ACCESS_KEY_ID
+      secret_key:
+        from_secret: AWS_SECRET_ACCESS_KEY
+      repo: 712625750597.dkr.ecr.us-west-2.amazonaws.com/fantasyfootball
+      registry: 712625750597.dkr.ecr.us-west-2.amazonaws.com
+    when:
+      branch:
+      - master

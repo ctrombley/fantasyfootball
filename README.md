@@ -35,3 +35,13 @@ The script will populate your workspace with lots of tibbles:
 It will also generate some plots:
 * Gold mining for available players based on remaining season stats
 * Team projections for the current week
+
+## Deployment
+Teach your kube cluster [how to log into ECR](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
+
+Next, apply the CronJob config to your cluster:
+```
+kubectl apply -f deploy/cronjob.yaml
+```
+
+CI will take care of pushing updates to the `master` branch up to ECR.

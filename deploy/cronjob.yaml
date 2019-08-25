@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: fantasyfootball
 spec:
-  schedule: "0 * * * *"
+  schedule: "0 17 * * MON,THU"
   jobTemplate:
     spec:
       template:
@@ -12,3 +12,5 @@ spec:
           - name: fantasyfootball
             image: 712625750597.dkr.ecr.us-west-2.amazonaws.com/fantasyfootball:latest
           restartPolicy: OnFailure
+          imagePullSecrets:
+          - name: regcred
