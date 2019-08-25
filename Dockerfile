@@ -1,4 +1,4 @@
-FROM rocker/r-base
+FROM rocker/tidyverse
 
 RUN R -e " \
 install.packages(c('configr', 'ggthemes', 'shiny')); \
