@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: fantasyfootball
 spec:
-  schedule: "0 17 * * MON,THU"
+  schedule: "0 10 * * *"
   jobTemplate:
     spec:
       template:
