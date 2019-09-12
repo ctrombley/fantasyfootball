@@ -29,7 +29,7 @@ scrape_weekly <- function(season = NULL, week = NULL, data_path = 'data', force=
                                     'FleaFlicker',
                                     'NumberFire',
                                     'Yahoo',
-                                    'FantasyFootballNerd',
+                                    #'FantasyFootballNerd',
                                     'NFL'), 
                            pos = c("QB", "RB", "WR", "TE", "K", "DST"),
                            season = season, week = week)
@@ -59,7 +59,7 @@ scrape_season <- function(season = NULL, data_path = 'data', force=FALSE) {
                                     'FFToday',
                                     #'FleaFlicker',
                                     'NumberFire',
-                                    'FantasyFootballNerd',
+                                    #'FantasyFootballNerd',
                                     'NFL',
                                     'RTSports',
                                     'Walterfootball',
@@ -70,3 +70,6 @@ scrape_season <- function(season = NULL, data_path = 'data', force=FALSE) {
   
   return(seasonData)
 }
+
+
+

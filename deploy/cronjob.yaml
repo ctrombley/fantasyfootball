@@ -13,4 +13,4 @@ spec:
             image: 712625750597.dkr.ecr.us-west-2.amazonaws.com/fantasyfootball:latest
           restartPolicy: OnFailure
           imagePullSecrets:
-          - name: regcred
+          - name: aws-registry

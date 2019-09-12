@@ -117,3 +117,4 @@ get_user <- function() {
   res <- GET(url, httr::config(token = get_auth_token()))
   return(content(res))
 }
+

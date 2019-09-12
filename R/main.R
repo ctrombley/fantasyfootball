@@ -10,7 +10,7 @@ source('R/aws_init.R')
 config = read.config('config.yaml')
 
 # Default to the current week, or week 1 if we're still in preseason
-week = max(1, as.integer(as.double(Sys.Date() - as.Date(config$season_start)) / 7) + 1)
+week = max(1, as.integer(as.double(Sys.Date() - as.Date(config$season_start) + 2) / 7) + 1)
 
 print("Scraping season data...")
 season_data = scrape_season()
