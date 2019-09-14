@@ -3,6 +3,17 @@
   <html>
     <head>
       <title>Fantasy Update</title>
+            <style>
+.images {
+  display: flex;
+  flex-wrap: wrap;
+} 
+
+.images img {
+  max-width: 750px;
+  max-height: 750px;
+}
+      </style>
     </head>
     <body>
       <h3>Lineup</h3>
@@ -17,17 +28,17 @@
       }}
       
       <h3>Team Projections</h3>
-      <div>
+      <div class="images">
         {{ tags$img(src=team_projections_url) }}
       </div>
       
       <h3>Weekly Gold Mining</h3>
-      <div>
+      <div class="images">
         {{ map(weekly_gold_mining_urls, function(url) tags$img(src=url)) }}
       </div>
       
       <h3>Sesason Gold Mining</h3>
-      <div>
+      <div class="images">
         {{ map(season_gold_mining_urls, function(url) tags$img(src=url)) }}
       </div>
     </body>

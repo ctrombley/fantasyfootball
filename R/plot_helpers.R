@@ -28,13 +28,13 @@ team_projections_plot <- function(dt,week) {
 }
 
 
-gold_mining_plot <- function(dt, positions, rows = 30, color_column = 'tier') {
+gold_mining_plot <- function(dt, positions, rows = 30, color_column = 'available') {
   filtered_dt <- dt %>% filter(position %in% positions)
   filtered_dt$relative_rank <- rank(-filtered_dt$points)
   filtered_dt <- filtered_dt %>% filter(filtered_dt$relative_rank < rows)
   
   max_positional_ceiling <- max(filtered_dt$ceiling, na.rm=TRUE)
-  x_max <- max(filtered_dt$ceiling,na.rm=TRUE)+50
+  x_max <- max(filtered_dt$ceiling,na.rm=TRUE)+25
   x_min <- min(filtered_dt$floor,na.rm=TRUE)
 
   ggplot(filtered_dt, aes(x=points, y=relative_rank, color=as.factor(!!as.name(color_column)))) +

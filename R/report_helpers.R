@@ -43,7 +43,7 @@ publish_gold_mining_plots <- function(dt, name_prefix) {
     positions <- unlist(strsplit(positions, "/"))
     s3_object <- paste0(date, '/', name_prefix, '_', paste(positions, collapse='_'), '.png')
     
-    color_column <- if(length(positions) > 1) 'position' else 'tier'
+    color_column <- if(length(positions) > 1) 'position' else 'available'
     
     url <- publish_plot(object = s3_object,
                         plot_fn = gold_mining_plot,
@@ -54,7 +54,7 @@ publish_gold_mining_plots <- function(dt, name_prefix) {
   return(urls)
 }
 
-create_report <- function(team_projections, weekly_available, season_available, week = 1) {
+create_report <- function(team_projections, team_season_projections, weekly_available, season_available, week = 1) {
   date <- Sys.Date()
   
   # Get the optimal lineup
@@ -69,10 +69,10 @@ create_report <- function(team_projections, weekly_available, season_available, 
   
   
   # Publish the weekly gold mining plots
-  weekly_gold_mining_urls <- publish_gold_mining_plots(weekly_available, 'weekly_gold_mining')
+  weekly_gold_mining_urls <- publish_gold_mining_plots(bind_rows(weekly_available, team_projections), 'weekly_gold_mining')
     
   # Publish the season gold mining plots
-  season_gold_mining_urls <- publish_gold_mining_plots(season_available, 'season_gold_mining')
+  season_gold_mining_urls <- publish_gold_mining_plots(bind_rows(season_available, team_season_projections), 'season_gold_mining')
     
   template <- htmlTemplate(filename = 'template.html',
                            week = week,
@@ -88,7 +88,7 @@ create_report <- function(team_projections, weekly_available, season_available, 
 
 email_report <- function(to, html) {
   send_email(html = html,
-             subject = 'Fantasy Update',
+             subject = paste0('Fantasy Update for ', Sys.Date()),
              from = 'fantasyfootball@trombs.com',
              to = to)
 }

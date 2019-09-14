@@ -47,9 +47,12 @@ weekly_available = weekly_projections %>% filter(avg_type == config$avg_type) %>
 print(paste("Generating team_projections for week ", week, "...", sep=""))
 team_projections = weekly_projections %>% filter(avg_type == config$avg_type) %>%  
   filter(id %in% my_team$id) %>% arrange(desc(points))
+team_season_projections = season_projections %>% filter(avg_type == config$avg_type) %>%  
+  filter(id %in% my_team$id) %>% arrange(desc(points))
 
 print(paste("Sending report for week ", week, "...", sep=""))
 html = create_report(team_projections,
+                     team_season_projections,
                      weekly_available,
                      season_available,
                      week = week)

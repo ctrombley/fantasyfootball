@@ -46,11 +46,7 @@ get_players_for_team <- function(team_id) {
     
     name <- player$name.full
     position <- player$primary_position
-    if (position=="DEF")
-      src_id <- toupper(player$editorial_team_abbr)
-    else
-      src_id <- player$player_id
-
+    src_id <- player$player_id
     
     if (is.null(position))
       position = "UNKNOWN"
@@ -59,7 +55,7 @@ get_players_for_team <- function(team_id) {
   }
   
   # Merge in the canonical player ids
-  player_ids = get_player_ids("Yahoo")
+  player_ids <- get_player_ids("Yahoo")
   players <- merge(player_ids, players, by="src_id", all.y=TRUE)
   
   # Select and reorder results
