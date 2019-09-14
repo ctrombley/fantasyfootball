@@ -20,7 +20,7 @@ scrape_weekly <- function(season = NULL, week = NULL, data_path = 'data', force=
     return(s3readRDS(object=file_name, bucket=config$aws_bucket))
   
   cat(paste("Scraping weekly data..."))
-  weeklyData <- scrape_data(src = c(#'CBS',
+  weeklyData <- scrape_data(src = c('CBS',
                                     #'ESPN',
                                     #'FantasyData',
                                     #'FantasyPros',
@@ -51,10 +51,10 @@ scrape_season <- function(season = NULL, data_path = 'data', force=FALSE) {
     return(s3readRDS(object=file_name, bucket=config$aws_bucket))
   
   cat(paste("Scraping season data..."))
-  seasonData <- scrape_data(src = c('CBS',
+  seasonData <- scrape_data(src = c(#'CBS',
                                     #'ESPN',
                                     #'FantasyData',
-                                    'FantasyPros',
+                                    #'FantasyPros',
                                     'FantasySharks',
                                     'FFToday',
                                     #'FleaFlicker',

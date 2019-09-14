@@ -34,14 +34,14 @@ gold_mining_plot <- function(dt, positions, rows = 30, color_column = 'tier') {
   filtered_dt <- filtered_dt %>% filter(filtered_dt$relative_rank < rows)
   
   max_positional_ceiling <- max(filtered_dt$ceiling, na.rm=TRUE)
-  x_max <- max(filtered_dt$ceiling,na.rm=TRUE)+10
+  x_max <- max(filtered_dt$ceiling,na.rm=TRUE)+50
   x_min <- min(filtered_dt$floor,na.rm=TRUE)
 
   ggplot(filtered_dt, aes(x=points, y=relative_rank, color=as.factor(!!as.name(color_column)))) +
     geom_errorbarh(aes(xmin=floor,xmax=ceiling),height=.3) +
     geom_point(size=5,color="white") +
     geom_text(aes(x=points,label=round(points,0)),size=3,show.legend = FALSE) +
-    geom_text(aes(x=ceiling, label=paste(first_name, last_name,paste("(", pos, ")", sep=""))),
+    geom_text(aes(x=ceiling, label=paste(first_name, last_name,paste("(", pos, ifelse(available==FALSE, ', OWNED', ''), ")", sep=""))),
               hjust=-0.2, angle=(0), size=3,show.legend = FALSE) +
     #geom_text(aes(x=floor,label=Status),color="red",fontface="bold",
     #          hjust=1.2, angle=(0), size=3,show.legend = FALSE) +

@@ -3,18 +3,18 @@ get_custom_scoring <- function() {
 
   hctm_scoring = list(
     pass = list(
-      pass_att = 0, pass_comp = 0, pass_inc = 0, pass_yds = 0.04, pass_tds = 4,
-      pass_int = -3, pass_40_yds = 0,  pass_40_tds = 1, pass_300_yds = 3, pass_350_yds = 0,
+      pass_att = 0, pass_comp = 0, pass_inc = 0, pass_yds = 0.04, pass_tds = 6,
+      pass_int = -3, pass_40_yds = 1,  pass_40_tds = 1, pass_300_yds = 3, pass_350_yds = 0,
       pass_400_yds = 3
     ),
     rush = list(
       all_pos = TRUE,
-      rush_yds = 0.1,  rush_att = 0, rush_40_yds = 0, rush_40_tds = 1, rush_tds = 6,
-      rush_100_yds = 3, rush_150_yds = 2, rush_200_yds = 3),
+      rush_yds = 0.1,  rush_att = 0, rush_40_yds = 1, rush_40_tds = 1, rush_tds = 6,
+      rush_1st = 0.5, rush_100_yds = 3, rush_150_yds = 2, rush_200_yds = 3),
     rec = list(
       all_pos = TRUE,
-      rec = 0.5, rec_yds = 0.1, rec_tds = 6, rec_40_yds = 0, rec_40_tds = 1, rec_100_yds = 3,
-      rec_150_yds = 2, rec_200_yds = 3
+      rec = 0.5, rec_yds = 0.1, rec_tds = 6, rec_40_yds = 1, rec_1st = 0.5, rec_40_tds = 1,
+      rec_100_yds = 3, rec_150_yds = 2, rec_200_yds = 3
     ),
     misc = list(
       all_pos = TRUE,
