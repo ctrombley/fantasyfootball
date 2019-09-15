@@ -33,22 +33,28 @@ print("Fetching league info...")
 players <- get_players_for_all_teams(config$league_id)
 my_team <- players %>% filter(team_id == config$my_team_id)
 
-# Mark each player as available or not
+# Mark each player as available or not and assign owning team info
 season_projections$available <- !(season_projections$id %in% players$id)
 weekly_projections$available <- !(weekly_projections$id %in% players$id)
+season_projections <- season_projections %>% left_join(players, by=c('id', 'position'))
+weekly_projections <- weekly_projections %>% left_join(players, by=c('id', 'position'))
+
+# Get the weighted averages
+season_projections = season_projections %>% filter(avg_type == config$avg_type)
+weekly_projections = weekly_projections %>% filter(avg_type == config$avg_type)
 
 # Get available players and order by season projected points
-season_available = season_projections %>% filter(avg_type == config$avg_type) %>% 
-  filter(available == TRUE) %>% arrange(desc(points))
-weekly_available = weekly_projections %>% filter(avg_type == config$avg_type) %>% 
-  filter(available == TRUE) %>% arrange(desc(points))
+season_available = season_projections %>% filter(available == TRUE) %>% arrange(desc(points))
+weekly_available = weekly_projections %>% filter(available == TRUE) %>% arrange(desc(points))
 
 # Get team projections
 print(paste("Generating team_projections for week ", week, "...", sep=""))
-team_projections = weekly_projections %>% filter(avg_type == config$avg_type) %>%  
-  filter(id %in% my_team$id) %>% arrange(desc(points))
-team_season_projections = season_projections %>% filter(avg_type == config$avg_type) %>%  
-  filter(id %in% my_team$id) %>% arrange(desc(points))
+team_projections = weekly_projections %>% filter(id %in% my_team$id) %>% arrange(desc(points))
+team_season_projections = season_projections %>% filter(id %in% my_team$id) %>% arrange(desc(points))
+
+# Get season remaining positional points per team
+season_positional_points <- season_projections %>% group_by(team_id, owner, pos) %>%
+  filter(owner != 'NA') %>% summarise(points = sum(points), na.rm = TRUE)
 
 print(paste("Sending report for week ", week, "...", sep=""))
 html = create_report(team_projections,
@@ -56,4 +62,5 @@ html = create_report(team_projections,
                      weekly_available,
                      season_available,
                      week = week)
+writeLines(html, 'report.html')
 email_report(html = html, to = config$email_to)

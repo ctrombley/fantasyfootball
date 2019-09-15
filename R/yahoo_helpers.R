@@ -98,8 +98,10 @@ get_players_for_all_teams <- function(league_id) {
   
   players = data.table()
   
-  for (team_id in team_ids) {
-    team_players = get_players_for_team(team_id)
+  for (id in team_ids) {
+    team_name = teams[teams$team_id == id]$name
+    team_players = get_players_for_team(id)
+    team_players$owner = team_name
     players <- rbind(players, team_players)
   }  
       

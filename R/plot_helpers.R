@@ -27,7 +27,6 @@ team_projections_plot <- function(dt,week) {
     scale_color_tableau()
 }
 
-
 gold_mining_plot <- function(dt, positions, rows = 30, color_column = 'available') {
   filtered_dt <- dt %>% filter(position %in% positions)
   filtered_dt$relative_rank <- rank(-filtered_dt$points)
@@ -41,17 +40,10 @@ gold_mining_plot <- function(dt, positions, rows = 30, color_column = 'available
     geom_errorbarh(aes(xmin=floor,xmax=ceiling),height=.3) +
     geom_point(size=5,color="white") +
     geom_text(aes(x=points,label=round(points,0)),size=3,show.legend = FALSE) +
-    geom_text(aes(x=ceiling, label=paste(first_name, last_name,paste("(", pos, ifelse(available==FALSE, ', OWNED', ''), ")", sep=""))),
+    geom_text(aes(x=ceiling, label=paste(first_name, last_name,paste("(", team, ",", pos, ifelse(available==FALSE, ', OWNED', ''), ")", sep=""))),
               hjust=-0.2, angle=(0), size=3,show.legend = FALSE) +
-    #geom_text(aes(x=floor,label=Status),color="red",fontface="bold",
-    #          hjust=1.2, angle=(0), size=3,show.legend = FALSE) +
     theme_minimal() +
     theme(
-      #plot.background = element_blank(),
-      #panel.grid.major.x = element_line(color="grey"),
-      #panel.grid.minor.y = element_line(color="grey"),
-      #panel.border=element_rect(color="grey",fill=NA),
-      #panel.background = element_blank(),
       legend.position = c(0.95, 0.1)
     ) + scale_y_reverse() +
     ylab("Rank") + xlab("Median FPTS Projection with Confidence Interval") +
@@ -59,3 +51,11 @@ gold_mining_plot <- function(dt, positions, rows = 30, color_column = 'available
     coord_cartesian(xlim =c(x_min, x_max)) +
     scale_color_tableau()
 }
+
+positional_strength_plot <- function(df) {
+  ggplot(season_positional_points, aes(owner, points, color = pos)) +
+    geom_point() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+  
+  
